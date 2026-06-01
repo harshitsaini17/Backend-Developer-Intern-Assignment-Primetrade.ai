@@ -69,12 +69,14 @@ export default function Dashboard() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const cleanedData = { ...formData };
+    if (!cleanedData.dueDate) delete cleanedData.dueDate;
     try {
       if (editingTask) {
-        await taskApi.updateTask(editingTask.id, formData);
+        await taskApi.updateTask(editingTask.id, cleanedData);
         addToast('Task updated', 'success');
       } else {
-        await taskApi.createTask(formData);
+        await taskApi.createTask(cleanedData);
         addToast('Task created', 'success');
       }
       resetForm();
