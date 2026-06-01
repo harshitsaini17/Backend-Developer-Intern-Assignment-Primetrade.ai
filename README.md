@@ -2,6 +2,12 @@
 
 A scalable REST API with JWT authentication, role-based access control (RBAC), and task management CRUD — paired with a React frontend for demonstration.
 
+## Demo
+
+https://github.com/user-attachments/assets/demo-video.mp4
+
+> A walkthrough video (`demo.mp4`) is included in the repository root showing the full login, dashboard, and CRUD flow.
+
 ## Tech Stack
 
 ### Backend
