@@ -1,12 +1,26 @@
 import { z } from "zod/v4";
 
-const emptyToUndefined = z.preprocess(
-  (val) => val === "" ? undefined : val,
+const isoDateString = z.preprocess(
+  (val) => {
+    if (val === "" || val === null || val === undefined) return undefined;
+    if (typeof val === "string") {
+      const d = new Date(val);
+      if (!isNaN(d.getTime())) return d.toISOString();
+    }
+    return val;
+  },
   z.string().datetime("Invalid date format").optional(),
 );
 
-const emptyToNull = z.preprocess(
-  (val) => val === "" ? null : val === undefined ? null : val,
+const nullableIsoDate = z.preprocess(
+  (val) => {
+    if (val === "" || val === null || val === undefined) return null;
+    if (typeof val === "string") {
+      const d = new Date(val);
+      if (!isNaN(d.getTime())) return d.toISOString();
+    }
+    return val;
+  },
   z.string().datetime("Invalid date format").nullable().optional(),
 );
 
@@ -15,7 +29,7 @@ export const createTaskSchema = z.object({
   description: z.string().max(2000, "Description too long").optional(),
   status: z.enum(["PENDING", "IN_PROGRESS", "COMPLETED", "CANCELLED"]).default("PENDING"),
   priority: z.enum(["LOW", "MEDIUM", "HIGH"]).default("MEDIUM"),
-  dueDate: emptyToUndefined,
+  dueDate: isoDateString,
 });
 
 export const updateTaskSchema = z.object({
@@ -23,7 +37,7 @@ export const updateTaskSchema = z.object({
   description: z.string().max(2000).optional(),
   status: z.enum(["PENDING", "IN_PROGRESS", "COMPLETED", "CANCELLED"]).optional(),
   priority: z.enum(["LOW", "MEDIUM", "HIGH"]).optional(),
-  dueDate: emptyToNull,
+  dueDate: nullableIsoDate,
 });
 
 export type CreateTaskInput = z.infer<typeof createTaskSchema>;
