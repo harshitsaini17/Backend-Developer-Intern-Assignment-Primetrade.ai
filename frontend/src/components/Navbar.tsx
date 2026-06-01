@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { LogOut, Shield, User } from 'lucide-react';
+import { LogOut, Shield, UserRound } from 'lucide-react';
 
 export function Navbar() {
   const { user, logout } = useAuth();
@@ -12,44 +12,41 @@ export function Navbar() {
   };
 
   return (
-    <nav className="bg-white shadow-sm border-b border-gray-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
-          <div className="flex items-center">
-            <Link to="/dashboard" className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">PT</span>
-              </div>
-              <span className="text-lg font-semibold text-gray-900">Primetrade</span>
-            </Link>
+    <nav className="sticky top-0 z-40 bg-white/70 backdrop-blur-xl border-b border-slate-200/60">
+      <div className="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
+        <Link to="/dashboard" className="flex items-center gap-2.5 group">
+          <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center shadow-sm">
+            <span className="text-white font-bold text-[10px]">PT</span>
           </div>
+          <span className="text-sm font-semibold text-slate-800 tracking-tight group-hover:text-indigo-600 transition-colors">
+            Primetrade
+          </span>
+        </Link>
 
-          {user && (
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-100 text-sm">
-                {user.role === 'ADMIN' ? (
-                  <Shield className="w-4 h-4 text-indigo-600" />
-                ) : (
-                  <User className="w-4 h-4 text-gray-600" />
-                )}
-                <span className="font-medium text-gray-700">{user.name}</span>
-                <span className="text-gray-400">|</span>
-                <span className={`text-xs px-2 py-0.5 rounded-full font-semibold ${
-                  user.role === 'ADMIN' ? 'bg-indigo-100 text-indigo-700' : 'bg-gray-200 text-gray-600'
-                }`}>
-                  {user.role}
-                </span>
-              </div>
-              <button
-                onClick={handleLogout}
-                className="flex items-center gap-1 text-gray-500 hover:text-red-500 transition-colors"
-              >
-                <LogOut className="w-4 h-4" />
-                <span className="text-sm">Logout</span>
-              </button>
+        {user && (
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-slate-50 border border-slate-100">
+              {user.role === 'ADMIN' ? (
+                <Shield className="w-3.5 h-3.5 text-indigo-500" />
+              ) : (
+                <UserRound className="w-3.5 h-3.5 text-slate-400" />
+              )}
+              <span className="text-xs font-medium text-slate-600">{user.name}</span>
+              <span className={`text-[10px] px-1.5 py-0.5 rounded font-semibold ${
+                user.role === 'ADMIN' ? 'bg-indigo-50 text-indigo-600' : 'bg-slate-100 text-slate-500'
+              }`}>
+                {user.role}
+              </span>
             </div>
-          )}
-        </div>
+            <button
+              onClick={handleLogout}
+              className="p-2 rounded-lg text-slate-400 hover:text-red-500 hover:bg-red-50 transition-all duration-200"
+              title="Logout"
+            >
+              <LogOut className="w-4 h-4" />
+            </button>
+          </div>
+        )}
       </div>
     </nav>
   );
