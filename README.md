@@ -4,7 +4,7 @@ A scalable REST API with JWT authentication, role-based access control (RBAC), a
 
 ## Demo
 
-https://github.com/user-attachments/assets/demo-video.mp4
+https://github.com/harshitsaini17/Backend-Developer-Intern-Assignment-Primetrade.ai/demo.mp4
 
 > A walkthrough video (`demo.mp4`) is included in the repository root showing the full login, dashboard, and CRUD flow.
 
